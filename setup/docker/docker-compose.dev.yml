@@ -7,13 +7,14 @@ services:
       dockerfile: docker-develop.dockerfile
     container_name: fastapi-develop
     environment: 
-      - POSTGRES_SERVER=database-pg
+      - POSTGRES_SERVER=localhost
     env_file: ../../develop.env
     ports:
       - 80:80
     depends_on:
       - database
-
+    network_mode: "host"
+  
   database:
     image: "postgres:latest"
     container_name: database-pg
@@ -23,7 +24,7 @@ services:
     env_file: ../../develop.env
     volumes:
       - pgsql_volume:/var/lib/postgresql/data
-
+    network_mode: "host"
   
 volumes:
   pgsql_volume:
